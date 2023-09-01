@@ -1,0 +1,86 @@
+﻿<Window x:Class="OnGiuaKy.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OnGiuaKy"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="MSSV - Họ Tên Nhân Viên" Height="523" Width="800">
+    <DockPanel>
+        <Label Content="CHƯƠNG TRÌNH QUẢN LÝ NHÂN VIÊN" DockPanel.Dock="Top" FontSize="20" HorizontalAlignment="Center" FontWeight="Bold"></Label>
+        <GroupBox FontSize="12" DockPanel.Dock="Bottom" Height="138" Foreground="#FF2878D0">
+            <GroupBox.Header>Danh sách nhân viên</GroupBox.Header>
+            <ListView x:Name="lvDS" DockPanel.Dock="Left" SelectionChanged="lvDS_SelectionChanged">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ThamNien}" Value="True">
+                                <Setter Property="Background" Value="Yellow"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Mã NV" DisplayMemberBinding="{Binding MaNV}" Width="100"/> <!--Binding là tên của Class ko phải trong SQL nha!-->
+                        <GridViewColumn Header="Họ Tên" DisplayMemberBinding="{Binding HoTen}" Width="220"/>
+                        <GridViewColumn Header="Giới Tính" DisplayMemberBinding="{Binding GioiTinh}" Width="100"/>
+                        <GridViewColumn Header="Ngày Vào Làm" DisplayMemberBinding="{Binding HireDate}" Width="220">
+                          
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+
+        <GroupBox FontSize="12" Width="596" Foreground="#FF2878D0">
+            <GroupBox.Header>
+                Thông tin nhân viên
+            </GroupBox.Header>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Mã NV:" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0"/>
+                <TextBox x:Name="txtMaNV" HorizontalAlignment="Center" VerticalAlignment="Top" Width="342" Margin="0,6,0,0"/>
+                <Label Content="Họ Tên:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,12,0,0" Grid.Row="3"/>
+                <TextBox x:Name="txtHoTen" HorizontalAlignment="Center" VerticalAlignment="Top" Width="342" Margin="0,18,0,0" Grid.Row="3"/>
+                <Label Content="Giới Tính:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,54,0,0" Grid.Row="3"/>
+                <Label  Content="Điện thoại:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,93,0,0" Grid.Row="3"/>
+                <TextBox x:Name="txtDienThoai" HorizontalAlignment="Center" VerticalAlignment="Top" Width="342" Margin="0,99,0,0" Grid.Row="3"/>
+                <Label Content="Ngày Vào Làm:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,133,0,0" Grid.Row="3"/>
+                <Label Content="Loại NV:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,187,0,0" Grid.Row="3"/>
+
+                <Label Name="lblDoanhSo" Content="Doanh Số:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,230,0,0" Grid.Row="3"/>
+                <Label Name="lblPC" Content="PC Nhiên Liệu:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,230,0,0" Grid.Row="3"/>
+
+                <TextBox x:Name="txtDoanhSo" Text ="{Binding DoanhSoText}" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Top" Width="342" Margin="0,236,0,0" Grid.Row="3"/>
+                <TextBox x:Name="txtPCNhienLieu" Text = "{Binding TienPhuCapNhienLieuText}" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Top" Width="342" Margin="0,236,0,0" Grid.Row="3"/>
+
+                <RadioButton x:Name="radNam" GroupName="Gender" Content="Nam" HorizontalAlignment="Left" Margin="169,59,0,0" Grid.Row="3" VerticalAlignment="Top"/>
+                <RadioButton x:Name="radNu" GroupName="Gender" Content="Nữ" HorizontalAlignment="Center" Margin="0,59,0,0" Grid.Row="3" VerticalAlignment="Top"/>
+                <DatePicker Name="dtpNgayVaoLam" HorizontalAlignment="Center" Margin="0,134,0,0" Grid.Row="3" VerticalAlignment="Top" Width="342"/>
+                <RadioButton x:Name="radBanHang" GroupName="Type" Content="Bán hàng" Checked="radBanHang_Checked" HorizontalAlignment="Left" Margin="169,193,0,0" Grid.Row="3" VerticalAlignment="Top" RenderTransformOrigin="0.077,0.469"/>
+                <RadioButton x:Name="radGiaoNhan" GroupName="Type" Content="Giao nhận" Checked="radGiaoNhan_Checked" HorizontalAlignment="Left" Margin="274,193,0,0" Grid.Row="3" VerticalAlignment="Top" RenderTransformOrigin="0.077,0.469"/>
+
+            </Grid>
+        </GroupBox>
+
+        <GroupBox FontSize="12" Foreground="#FF2878D0">
+            <GroupBox.Header>Tác vụ</GroupBox.Header>
+            <StackPanel Orientation="Vertical">
+                <Button x:Name="btnThem" Content="Thêm" Width="100" Margin="10" Height="27" Click="btnThem_Click"/>
+                <Button x:Name="btnLuu" Content="Lưu" Width="100" Margin="10" Height="27" Click="btnLuu_Click" />
+                <Button x:Name="btnXoa" Content="Xóa" Width="100" Margin="10" Height="27" Click="btnXoa_Click" />
+                <Button x:Name="btnSua" Content="Sửa" Width="100" Margin="10" Height="27" Click="btnSua_Click"/>
+                <Button x:Name="btnSapXep" Content="Sắp Xếp" Width="100" Margin="10" Height="27" Click="btnSapXep_Click"/>
+                <Button x:Name="btnThongke" Content="Thống Kê" Width="100" Margin="1" Height="27" Click="btnThongke_Click"/>
+            </StackPanel>
+        </GroupBox>
+    </DockPanel>
+</Window>
